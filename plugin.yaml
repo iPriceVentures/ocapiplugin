@@ -1,7 +1,7 @@
 plugin:
-    name: 'iprice.api::lang.plugin.name'
-    description: 'iprice.api::lang.plugin.description'
-    author: 'iPriceGroup'
+    name: 'ipricegroup.ocapiplugin::lang.plugin.name'
+    description: 'ipricegroup.ocapiplugin::lang.plugin.description'
+    author: 'iPrice Group'
     icon: icon-cloud
     homepage: 'https://iprice.my'
 navigation:

@@ -11,9 +11,9 @@ class Plugin extends PluginBase
     public function pluginDetails()
     {
         return [
-            'name' => 'iprice.api::lang.plugin.name',
-            'description' => 'iprice.api::lang.plugin.description',
-            'author' => 'iPrice',
+            'name' => 'ipricegroup.ocapiplugin::lang.plugin.name',
+            'description' => 'ipricegroup.ocapiplugin::lang.plugin.description',
+            'author' => 'iPrice Group',
             'icon' => 'icon-cloud'
         ];
     }

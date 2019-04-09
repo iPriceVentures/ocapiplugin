@@ -5,11 +5,11 @@ namespace IPriceGroup\OcApiPlugin\Updates;
 use Schema;
 use October\Rain\Database\Updates\Migration;
 
-class BuilderTableCreateIpriceApiResources extends Migration
+class BuilderTableCreateIpricegroupOcapipluginResources extends Migration
 {
     public function up()
     {
-        Schema::create('iprice_api_resources', function($table)
+        Schema::create('ipricegroup_ocapiplugin_resources', function($table)
         {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
@@ -25,6 +25,6 @@ class BuilderTableCreateIpriceApiResources extends Migration
     
     public function down()
     {
-        Schema::dropIfExists('iprice_api_resources');
+        Schema::dropIfExists('ipricegroup_ocapiplugin_resources');
     }
 }

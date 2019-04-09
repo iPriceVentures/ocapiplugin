@@ -19,7 +19,7 @@ class Resource extends Model
     /**
      * @var string The database table used by the model.
      */
-    public $table = 'iprice_api_resources';
+    public $table = 'ipricegroup_ocapiplugin_resources';
 
     /**
      * @var array Validation rules
