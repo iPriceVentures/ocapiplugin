@@ -1,0 +1,10 @@
+name: Resources
+form: $/ipricegroup/ocapiplugin/models/resource/fields.yaml
+modelClass: IPriceGroup\OcApiPlugin\Models\Resource
+defaultRedirect: ipricegroup/ocapiplugin/resources
+create:
+    redirect: 'ipricegroup/ocapiplugin/resources/update/:id'
+    redirectClose: ipricegroup/ocapiplugin/resources
+update:
+    redirect: ipricegroup/ocapiplugin/resources
+    redirectClose: ipricegroup/ocapiplugin/resources

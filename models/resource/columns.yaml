@@ -1,0 +1,13 @@
+columns:
+    id:
+        label: ID
+        type: number
+    base_endpoint:
+        label: 'Base Endpoint'
+        type: text
+    model_class:
+        label: 'Model Class'
+        type: text
+    is_auth_required:
+        label: 'Requires Authentication'
+        type: switch

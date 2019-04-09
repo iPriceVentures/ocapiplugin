@@ -1,0 +1,27 @@
+fields:
+    base_endpoint:
+        label: 'Base Endpoint'
+        span: auto
+        placeholder: 'Base endpoint (required)'
+        required: 1
+        type: text
+    model_class:
+        label: 'Model Class'
+        span: auto
+        required: 1
+        type: dropdown
+    eager_load:
+        label: 'Eager Load Relationships'
+        prompt: 'Add Relationship'
+        span: auto
+        type: repeater
+        form:
+            fields:
+                relationship:
+                    label: Relationship
+                    span: full
+                    type: text
+    is_auth_required:
+        label: 'Require Authentication'
+        span: auto
+        type: checkbox

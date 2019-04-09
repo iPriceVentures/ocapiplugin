@@ -1,0 +1,11 @@
+plugin:
+    name: 'iprice.api::lang.plugin.name'
+    description: 'iprice.api::lang.plugin.description'
+    author: 'iPriceGroup'
+    icon: icon-cloud
+    homepage: 'https://iprice.my'
+navigation:
+    iprice-api-main:
+        label: 'iPrice API'
+        url: /ipricegroup/ocapiplugin/resources
+        icon: icon-cloud
