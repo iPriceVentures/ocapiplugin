@@ -2,6 +2,7 @@
 
 namespace IPriceGroup\OcApiPlugin\Models;
 
+use IPriceGroup\OcApiPlugin\Classes\ResourceObserver;
 use Model;
 use RainLab\Builder\Classes\ComponentHelper;
 
@@ -36,5 +37,12 @@ class Resource extends Model
         unset($globalModels[self::class]);
 
         return $globalModels;
+    }
+
+    protected static function boot()
+    {
+        self::observe(ResourceObserver::class);
+
+        parent::boot();
     }
 }
