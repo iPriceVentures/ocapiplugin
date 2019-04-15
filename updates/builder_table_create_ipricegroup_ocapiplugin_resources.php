@@ -13,7 +13,7 @@ class BuilderTableCreateIpricegroupOcapipluginResources extends Migration
         {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
-            $table->string('base_endpoint');
+            $table->string('base_endpoint')->unique();
             $table->string('model_class');
             $table->json('eager_load');
             $table->boolean('is_auth_required')->default(false);
