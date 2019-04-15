@@ -19,7 +19,6 @@ class BuilderTableCreateIpricegroupOcapipluginResources extends Migration
             $table->boolean('is_auth_required')->default(false);
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-            $table->timestamp('deleted_at')->nullable();
         });
     }
     
