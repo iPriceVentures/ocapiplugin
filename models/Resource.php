@@ -2,6 +2,7 @@
 
 namespace IPriceGroup\OcApiPlugin\Models;
 
+use IPriceGroup\OcApiPlugin\Classes\ResourceObserver;
 use Model;
 use RainLab\Builder\Classes\ComponentHelper;
 
@@ -11,10 +12,8 @@ use RainLab\Builder\Classes\ComponentHelper;
 class Resource extends Model
 {
     use \October\Rain\Database\Traits\Validation;
-    
-    use \October\Rain\Database\Traits\SoftDelete;
 
-    protected $dates = ['deleted_at'];
+    protected $dates = [];
 
     /**
      * @var string The database table used by the model.
@@ -38,5 +37,12 @@ class Resource extends Model
         unset($globalModels[self::class]);
 
         return $globalModels;
+    }
+
+    protected static function boot()
+    {
+        self::observe(ResourceObserver::class);
+
+        parent::boot();
     }
 }

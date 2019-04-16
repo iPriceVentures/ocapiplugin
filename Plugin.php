@@ -17,9 +17,4 @@ class Plugin extends PluginBase
             'icon' => 'icon-cloud'
         ];
     }
-
-    public function boot()
-    {
-        Resource::observe(ResourceObserver::class);
-    }
 }
