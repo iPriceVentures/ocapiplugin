@@ -1,3 +1,6 @@
 1.0.0:
     - 'Initialize plugin'
     - builder_table_create_ipricegroup_ocapiplugin_resources.php
+1.0.1:
+    - 'Make base_endpoint unique and remove soft delete'
+    - builder_table_update_ipricegroup_ocapiplugin_resources.php
