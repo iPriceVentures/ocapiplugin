@@ -10,7 +10,7 @@ navigation:
         url: /ipricegroup/ocapiplugin/resources
         icon: icon-cloud
         permissions:
-        - iprice-restful-api-generator
+            - iprice-restful-api-generator
 permissions:
     iprice-restful-api-generator:
         tab: 'IPrice RESTful API Generator'
