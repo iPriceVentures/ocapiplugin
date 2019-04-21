@@ -17,4 +17,14 @@ class Plugin extends PluginBase
             'icon' => 'icon-cloud'
         ];
     }
+
+    public function registerPermissions()
+    {
+        return [
+            'ipricegroup.ocapiplugin.manage_apis' => [
+                'label' => 'Manage the API endpoints',
+                'tab' => 'APIs'
+            ]
+        ];
+    }
 }

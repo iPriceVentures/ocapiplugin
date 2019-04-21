@@ -11,7 +11,3 @@ navigation:
         icon: icon-cloud
         permissions:
             - manage_apis
-permissions:
-    manage_apis:
-        tab: 'Manage APIs'
-        label: 'Manage APIs'
