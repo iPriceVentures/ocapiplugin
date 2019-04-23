@@ -9,3 +9,9 @@ navigation:
         label: 'iPrice API'
         url: /ipricegroup/ocapiplugin/resources
         icon: icon-cloud
+        permissions:
+            - manage_apis
+permissions:
+    manage_apis:
+        tab: 'APIs'
+        label: 'Manage the API endpoints'

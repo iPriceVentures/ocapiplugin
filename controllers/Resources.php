@@ -9,9 +9,11 @@ use IPriceGroup\OcApiPlugin\Classes\ApiGenerator;
 class Resources extends Controller
 {
     public $implement = [        'Backend\Behaviors\ListController',        'Backend\Behaviors\FormController'    ];
-    
+
     public $listConfig = 'config_list.yaml';
     public $formConfig = 'config_form.yaml';
+
+    public $requiredPermissions = ['ipricegroup.ocapiplugin.manage_apis'];
 
     /**
      * @var ApiGenerator
