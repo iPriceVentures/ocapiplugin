@@ -9,6 +9,7 @@ navigation:
         label: 'iPrice API'
         url: /ipricegroup/ocapiplugin/resources
         icon: icon-cloud
+        iconSvg: plugins/ipricegroup/ocapiplugin/icon.svg
         permissions:
             - manage_apis
 permissions:

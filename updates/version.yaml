@@ -6,3 +6,5 @@
     - builder_table_update_ipricegroup_ocapiplugin_resources.php
 1.0.2:
     - 'Register Manage APIs permission'
+1.0.3:
+    - 'Use plugin icon in navigation'
