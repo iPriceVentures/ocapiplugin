@@ -8,3 +8,5 @@
     - 'Register Manage APIs permission'
 1.0.3:
     - 'Use plugin icon in navigation'
+1.0.4:
+    - 'Add custom filters property to be exclude in actual filters'
