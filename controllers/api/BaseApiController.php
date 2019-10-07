@@ -17,6 +17,7 @@ abstract class BaseApiController extends Controller
     private const DEFAULT_PAGE = 1;
     private const ERROR_RESOURCE_NOT_FOUND = 'Resource not found';
     private const ERROR_RESOURCE_ID_NOT_SPECIFIED = 'Resource ID not specified';
+    private const FILTER_EXCEPT_PARAMS = ['page', 'limit', 'token'];
 
     /** @var string */
     protected $resourceName = '';
@@ -26,6 +27,9 @@ abstract class BaseApiController extends Controller
 
     /** @var array $eagerLoad */
     protected $eagerLoad = [];
+
+    /** @var array $customFilter */
+    protected $customFilter = [];
 
     /** @var Builder */
     protected $queryBuilder;
@@ -47,7 +51,7 @@ abstract class BaseApiController extends Controller
             ->limit($limit)
             ->offset($offset);
 
-        if ($filters = Request::except(['page', 'limit', 'token'])) {
+        if ($filters = Request::except(array_merge(self::FILTER_EXCEPT_PARAMS, $this->customFilter))) {
             $this->queryBuilder->where($filters);
         }
 
