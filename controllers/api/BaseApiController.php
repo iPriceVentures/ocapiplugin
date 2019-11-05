@@ -27,6 +27,7 @@ abstract class BaseApiController extends Controller
         'neq' => '<>',
         'contains' => 'like'
     ];
+    private const DEFAULT_SORT_ORDER = 'asc';
 
     /** @var string */
     protected $resourceName = '';
@@ -63,6 +64,7 @@ abstract class BaseApiController extends Controller
         $this->applyFilter();
         $this->applyCustomFilter();
         $this->eagerLoadRelations();
+        $this->applySorting();
 
         return response()->json(['data' => $this->queryBuilder->get()]);
     }
@@ -172,5 +174,44 @@ abstract class BaseApiController extends Controller
         if (count($this->eagerLoad)) {
             $this->queryBuilder->with($this->eagerLoad);
         }
+    }
+
+    private function applySorting()
+    {
+        $sortString = Request::get('sort_by', '');
+
+        if (!empty($sortString)) {
+            $sortCriteria = $this->getSortCriteria($sortString);
+            foreach ($sortCriteria as $sortField => $sortOrder) {
+                $this->queryBuilder->orderBy($sortField, $sortOrder);
+            }
+        }
+    }
+
+    /**
+     * @param string $sortString
+     *
+     * @return array
+     */
+    private function getSortCriteria($sortString): array
+    {
+        $sortCriteria = [];
+        $strPattern = '/([\w]+):?([\w]+)*/';
+        preg_match_all($strPattern, $sortString, $matches);
+        if (!empty($matches)) {
+            $sortFields = $matches[1] ?? [];
+            $sortOrders = $matches[2] ?? [];
+
+            $sortOrders = array_map(
+                function ($item) {
+                    return $item ?: self::DEFAULT_SORT_ORDER;
+                },
+                $sortOrders
+            );
+
+            $sortCriteria = array_combine($sortFields, $sortOrders);
+        }
+
+        return $sortCriteria;
     }
 }
