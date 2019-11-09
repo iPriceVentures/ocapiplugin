@@ -5,7 +5,9 @@ namespace IPriceGroup\OcApiPlugin\Controllers\Api;
 use Cms\Classes\Controller;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
 use IPriceGroup\OcApiPlugin\Controllers\Api\Exceptions\ResourceIdNotSpecified;
 use October\Rain\Database\Builder;
 use Symfony\Component\HttpFoundation\Response;
@@ -178,40 +180,11 @@ abstract class BaseApiController extends Controller
 
     private function applySorting()
     {
-        $sortString = Request::get('sort_by', '');
-
-        if (!empty($sortString)) {
-            $sortCriteria = $this->getSortCriteria($sortString);
-            foreach ($sortCriteria as $sortField => $sortOrder) {
-                $this->queryBuilder->orderBy($sortField, $sortOrder);
+        $sortCriterias = (array) Request::get('sort');
+        foreach ($sortCriterias as $sortOrder => $sortField) {
+            if ($sortField) {
+                $this->queryBuilder->orderBy($sortField, $sortOrder ?: self::DEFAULT_SORT_ORDER);
             }
         }
-    }
-
-    /**
-     * @param string $sortString
-     *
-     * @return array
-     */
-    private function getSortCriteria($sortString): array
-    {
-        $sortCriteria = [];
-        $strPattern = '/([\w]+):?([\w]+)*/';
-        preg_match_all($strPattern, $sortString, $matches);
-        if (!empty($matches)) {
-            $sortFields = $matches[1] ?? [];
-            $sortOrders = $matches[2] ?? [];
-
-            $sortOrders = array_map(
-                function ($item) {
-                    return $item ?: self::DEFAULT_SORT_ORDER;
-                },
-                $sortOrders
-            );
-
-            $sortCriteria = array_combine($sortFields, $sortOrders);
-        }
-
-        return $sortCriteria;
     }
 }
