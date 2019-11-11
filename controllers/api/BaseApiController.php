@@ -156,8 +156,11 @@ abstract class BaseApiController extends Controller
             array_walk(
                 $filterValues,
                 function ($value, $operator) use ($filterField) {
-                    $operator = self::FILTER_OPERATORS_MAPPING[$operator] ?? self::DEFAULT_FILTER_OPERATOR;
-                    $this->queryBuilder->where($filterField, $operator, $value);
+                    $this->queryBuilder->where(
+                        $filterField,
+                        self::FILTER_OPERATORS_MAPPING[$operator] ?? self::DEFAULT_FILTER_OPERATOR,
+                        $value
+                    );
                 }
             );
         }
