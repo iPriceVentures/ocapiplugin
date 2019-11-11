@@ -64,8 +64,8 @@ GET example.com/api/v1/blogs/?id[gte]=2&id[lte]=200
 # Supporting operators:
 ## 'gte': greater than and equal (>=)
 ## 'gt': greater than (>)
-## 'lte': lesser than and equal (<=)
-## 'lt': lesser than (<)
+## 'lte': less than and equal (<=)
+## 'lt': less than (<)
 ## 'eq': equal to (=) - used as default if not specified
 ## 'neq': not equal to (<>)
 ## 'contains': contains sub-string (like)
