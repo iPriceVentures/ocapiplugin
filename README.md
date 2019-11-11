@@ -68,7 +68,7 @@ GET example.com/api/v1/blogs/?id[gte]=2&id[lte]=200
 ## 'lt': lesser than (<)
 ## 'eq': equal to (=) - used as default if not specified
 ## 'neq': not equal to (<>)
-## 'contains': like
+## 'contains': contains sub-string (like)
 ```
 By default, the API will return the first 10 results. If you want to get the next batch or return more than the default limit, you can use the `page` and/or `limit` query parameters like the following:
 ```
