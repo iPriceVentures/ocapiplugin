@@ -182,14 +182,12 @@ abstract class BaseApiController extends Controller
     {
         $sortCriterias = (array) Request::get('sort');
 
-        foreach ($sortCriterias as $sortCriteria) {
-            [$sortField, $sortOrder] = array_pad(
-                explode(':', $sortCriteria),
-                2,
-                self::DEFAULT_SORT_ORDER);
-
+        foreach ($sortCriterias as $sortField => $sortOrder) {
             if ($sortField) {
-                $this->queryBuilder->orderBy($sortField, $sortOrder);
+                $this->queryBuilder->orderBy(
+                    $sortField,
+                    $sortOrder ?: self::DEFAULT_SORT_ORDER
+                );
             }
         }
     }

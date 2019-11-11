@@ -95,19 +95,17 @@ GET example.com/api/v1/blogs/1
 GET example.com/api/v1/tech/blogs/1
 ```
 
-To sort your results, use **sort** as a query parameter. The values of **sort** parameter is a colon-separated string in the format of `sort_field:sort_order`. If `sort_order` is not specified, the default sort order `asc` will be used
+To sort your results, use **sort** as a query parameter. The values of **sort** parameter is an array with `sort_field` as a key and `sort_order` as value. If `sort_order` is not specified, the default sort order `asc` will be used
 ```
 # Sort results by position - from the first to the last (ascending)
-GET example.com/api/v1/blogs/?sort=position
+GET example.com/api/v1/blogs/?sort[position]=asc
 
 # Sort results by created_at - from the newest to the oldest (descending)
-GET example.com/api/v1/blogs/?sort=created_at:desc
+GET example.com/api/v1/blogs/?sort[created_at]=desc
 
 # Sort results by position - from the first to the last. If there are records with the same position, sort by created_at - from the newest to the oldest
-GET example.com/api/v1/blogs/?sort[]=position&sort[]=created_at:desc
+GET example.com/api/v1/blogs/?sort[position]=asc&sort[created_at]=desc
 ```
-The `sort` parameter could be a string for single-field sorting (`sort=position`), or an array for multi-fields sorting (`sort[]=position&sort[]=created_at:desc`).
-
 The order of sort criteria in the query string will be preserved.
 
 #### `PUT` requests
