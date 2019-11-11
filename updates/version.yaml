@@ -10,3 +10,5 @@
     - 'Use plugin icon in navigation'
 1.0.4:
     - 'Add custom filters property to be exclude in actual filters'
+1.0.5:
+    - 'Update API to support advanced filter'

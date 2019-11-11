@@ -46,6 +46,29 @@ GET example.com/api/v1/blogs
 # note: you can use any fields from the resource as filter
 # and you can use as many filters as you want.
 GET example.com/api/v1/blogs/?category=tech
+
+# Filtering with operator
+# You can use operator in filtering requests
+# by indicating the field that you want to filter,
+# the operator and the value
+
+# Get collection where views > 10
+GET example.com/api/v1/blogs/?views[gt]=10
+
+# Get collection where id not equal to 2
+GET example.com/api/v1/blogs/?id[neq]=2
+
+# Get collection where id is between 2 and 200
+GET example.com/api/v1/blogs/?id[gte]=2&id[lte]=200
+
+# Supporting operators:
+## 'gte': greater than and equal (>=)
+## 'gt': greater than (>)
+## 'lte': lesser than and equal (<=)
+## 'lt': lesser than (<)
+## 'eq': equal to (=) - used as default if not specified
+## 'neq': not equal to (<>)
+## 'contains': like
 ```
 By default, the API will return the first 10 results. If you want to get the next batch or return more than the default limit, you can use the `page` and/or `limit` query parameters like the following:
 ```
@@ -71,7 +94,6 @@ To get a single resource, specify the resource ID after the base endpoint:
 GET example.com/api/v1/blogs/1
 GET example.com/api/v1/tech/blogs/1
 ```
-
 #### `PUT` requests
 You can update a resource by doing a `PUT` request to a specific resource with a payload:
 ```
