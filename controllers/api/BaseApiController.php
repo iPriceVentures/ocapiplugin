@@ -5,9 +5,7 @@ namespace IPriceGroup\OcApiPlugin\Controllers\Api;
 use Cms\Classes\Controller;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Str;
 use IPriceGroup\OcApiPlugin\Controllers\Api\Exceptions\ResourceIdNotSpecified;
 use October\Rain\Database\Builder;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +16,7 @@ abstract class BaseApiController extends Controller
     private const DEFAULT_PAGE = 1;
     private const ERROR_RESOURCE_NOT_FOUND = 'Resource not found';
     private const ERROR_RESOURCE_ID_NOT_SPECIFIED = 'Resource ID not specified';
-    private const FILTER_EXCEPT_PARAMS = ['page', 'limit', 'token'];
+    private const FILTER_EXCEPT_PARAMS = ['page', 'limit', 'token', 'sort'];
     private const DEFAULT_FILTER_OPERATOR = '=';
     private const FILTER_OPERATORS_MAPPING = [
         'gt' => '>',
