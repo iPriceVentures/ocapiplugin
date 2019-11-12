@@ -14,3 +14,7 @@
     - 'Update API to support advanced filter'
 1.0.6:
     - 'Update API to support sorting'
+1.0.7:
+    - 'Fix issue where custom controllers get overwritten with default controller after saving a resource'
+1.1.0:
+    - 'Create ocapiplugin:routes:sync command to sync routes via CLI for CD'

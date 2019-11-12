@@ -1,7 +1,8 @@
-<?php namespace IPriceGroup\OcApiPlugin;
+<?php
 
-use IPriceGroup\OcApiPlugin\Classes\ResourceObserver;
-use IPriceGroup\OcApiPlugin\Models\Resource;
+namespace IPriceGroup\OcApiPlugin;
+
+use IPriceGroup\OcApiPlugin\Console\SyncRoutesCommand;
 use System\Classes\PluginBase;
 
 class Plugin extends PluginBase
@@ -16,5 +17,10 @@ class Plugin extends PluginBase
             'author' => 'iPrice Group',
             'icon' => 'icon-cloud'
         ];
+    }
+
+    public function register()
+    {
+        $this->registerConsoleCommand('ocapiplugin:routes:sync', SyncRoutesCommand::class);
     }
 }
