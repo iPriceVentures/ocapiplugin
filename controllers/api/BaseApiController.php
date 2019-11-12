@@ -16,7 +16,7 @@ abstract class BaseApiController extends Controller
     private const DEFAULT_PAGE = 1;
     private const ERROR_RESOURCE_NOT_FOUND = 'Resource not found';
     private const ERROR_RESOURCE_ID_NOT_SPECIFIED = 'Resource ID not specified';
-    private const FILTER_EXCEPT_PARAMS = ['page', 'limit', 'token'];
+    private const FILTER_EXCEPT_PARAMS = ['page', 'limit', 'token', 'sort'];
     private const DEFAULT_FILTER_OPERATOR = '=';
     private const FILTER_OPERATORS_MAPPING = [
         'gt' => '>',
@@ -27,6 +27,7 @@ abstract class BaseApiController extends Controller
         'neq' => '<>',
         'contains' => 'like'
     ];
+    private const DEFAULT_SORT_ORDER = 'asc';
 
     /** @var string */
     protected $resourceName = '';
@@ -63,6 +64,7 @@ abstract class BaseApiController extends Controller
         $this->applyFilter();
         $this->applyCustomFilter();
         $this->eagerLoadRelations();
+        $this->applySorting();
 
         return response()->json(['data' => $this->queryBuilder->get()]);
     }
@@ -171,6 +173,20 @@ abstract class BaseApiController extends Controller
     {
         if (count($this->eagerLoad)) {
             $this->queryBuilder->with($this->eagerLoad);
+        }
+    }
+
+    private function applySorting()
+    {
+        $sortCriterias = (array) Request::get('sort');
+
+        foreach ($sortCriterias as $sortField => $sortOrder) {
+            if ($sortField) {
+                $this->queryBuilder->orderBy(
+                    $sortField,
+                    $sortOrder ?: self::DEFAULT_SORT_ORDER
+                );
+            }
         }
     }
 }
