@@ -6,7 +6,6 @@ use Cms\Classes\Controller;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Str;
 use IPriceGroup\OcApiPlugin\Controllers\Api\Exceptions\ResourceIdNotSpecified;
 use October\Rain\Database\Builder;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +17,16 @@ abstract class BaseApiController extends Controller
     private const ERROR_RESOURCE_NOT_FOUND = 'Resource not found';
     private const ERROR_RESOURCE_ID_NOT_SPECIFIED = 'Resource ID not specified';
     private const FILTER_EXCEPT_PARAMS = ['page', 'limit', 'token'];
+    private const DEFAULT_FILTER_OPERATOR = '=';
+    private const FILTER_OPERATORS_MAPPING = [
+        'gt' => '>',
+        'gte' => '>=',
+        'lt' => '<',
+        'lte' => '<=',
+        'eq' => '=',
+        'neq' => '<>',
+        'contains' => 'like'
+    ];
 
     /** @var string */
     protected $resourceName = '';
@@ -51,10 +60,7 @@ abstract class BaseApiController extends Controller
             ->limit($limit)
             ->offset($offset);
 
-        if ($filters = Request::except(array_merge(self::FILTER_EXCEPT_PARAMS, $this->customFilter))) {
-            $this->queryBuilder->where($filters);
-        }
-
+        $this->applyFilter();
         $this->applyCustomFilter();
         $this->eagerLoadRelations();
 
@@ -140,6 +146,25 @@ abstract class BaseApiController extends Controller
                 ->json(['error' => self::ERROR_RESOURCE_NOT_FOUND])
                 ->setStatusCode(Response::HTTP_NOT_FOUND);
         }
+    }
+
+    private function applyFilter()
+    {
+        $filters = Request::except(array_merge(self::FILTER_EXCEPT_PARAMS, $this->customFilter));
+        foreach ($filters as $filterField => $filterValues) {
+            $filterValues = (array) $filterValues;
+            array_walk(
+                $filterValues,
+                function ($value, $operator) use ($filterField) {
+                    $this->queryBuilder->where(
+                        $filterField,
+                        self::FILTER_OPERATORS_MAPPING[$operator] ?? self::DEFAULT_FILTER_OPERATOR,
+                        ($operator == 'contains') ? '%' . $value . '%' : $value
+                    );
+                }
+            );
+        }
+
     }
 
     private function eagerLoadRelations()
