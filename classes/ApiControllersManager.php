@@ -9,14 +9,18 @@ use IPriceGroup\OcApiPlugin\Models\Resource;
 
 class ApiControllersManager
 {
-    private const API_CONTROLLER_TEMPLATE_PATH = __DIR__ . '/../templates/controller.tpl';
+    private const API_CONTROLLER_TPL_PATH = __DIR__ . '/../templates/controller.tpl';
     private const API_CONTROLLERS_DIRECTORY = __DIR__ . '/../controllers/api';
     private const API_CONTROLLER_NAMESPACE = 'IPriceGroup\OcApiPlugin\Controllers\Api';
-    private const API_CONTROLLER_TEMPLATE_PLACEHOLDERS = [
+    private const API_CONTROLLER_TPL_PLACEHOLDERS = [
         '%controller_class%',
         '%resource_name%',
         '%model_class%',
         '%eager_load%',
+    ];
+    private const API_CONTROLLER_REGEX_PATTERNS = [
+        '/(?<=\$resourceName\s=\s\')(\w+)/m',
+        '/(?<=\$eagerLoad\s=\s\[)([\w\',\s]*)/m',
     ];
 
     /**
@@ -27,12 +31,12 @@ class ApiControllersManager
     /**
      * @var string
      */
-    private $controllerTemplate;
+    private $controllerTpl;
 
     public function __construct(Filesystem $filesystem)
     {
         $this->filesystem = $filesystem;
-        $this->controllerTemplate = $this->filesystem->get(self::API_CONTROLLER_TEMPLATE_PATH);
+        $this->controllerTpl = $this->filesystem->get(self::API_CONTROLLER_TPL_PATH);
     }
 
     public function syncControllers(Collection $resources)
@@ -53,15 +57,29 @@ class ApiControllersManager
         $controllerClass = self::getControllerClass($resource);
 
         $replacements = [
-            $controllerClass,
-            Str::singular(basename($resource->base_endpoint)),
-            $resource->model_class,
-            $this->stringifyEagerLoad($resource),
+            'controller' => $controllerClass,
+            'resource' => Str::singular(basename($resource->base_endpoint)),
+            'model' => $resource->model_class,
+            'eagerload' => $this->stringifyEagerLoad($resource),
         ];
 
-        $this->filesystem->put(
-            self::API_CONTROLLERS_DIRECTORY . '/' . $controllerClass . '.php',
-            str_replace(self::API_CONTROLLER_TEMPLATE_PLACEHOLDERS, $replacements, $this->controllerTemplate));
+        $controllerFullPath = self::API_CONTROLLERS_DIRECTORY . '/' . $controllerClass . '.php';
+
+        try {
+            $existingFile = $this->filesystem->get($controllerFullPath);
+            $fileContent = preg_replace(
+                self::API_CONTROLLER_REGEX_PATTERNS,
+                [
+                    $replacements['resource'],
+                    $replacements['eagerload'],
+                ],
+                $existingFile
+            );
+        } catch (\Exception $e) {
+            $fileContent = str_replace(self::API_CONTROLLER_TPL_PLACEHOLDERS, $replacements, $this->controllerTpl);
+        }
+
+        $this->filesystem->put($controllerFullPath, $fileContent);
     }
 
     private function removeDeletedControllers(Collection $resources)
