@@ -159,7 +159,7 @@ abstract class BaseApiController extends Controller
                     $this->queryBuilder->where(
                         $filterField,
                         self::FILTER_OPERATORS_MAPPING[$operator] ?? self::DEFAULT_FILTER_OPERATOR,
-                        ($operator == 'contains') ? '%' . $value . '%' : $value
+                        ($operator === 'contains') ? '%' . $value . '%' : $value
                     );
                 }
             );
