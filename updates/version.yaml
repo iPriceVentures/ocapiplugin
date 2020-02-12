@@ -18,3 +18,6 @@
     - 'Fix issue where custom controllers get overwritten with default controller after saving a resource'
 1.1.0:
     - 'Create ocapiplugin:routes:sync command to sync routes via CLI for CD'
+1.2.0:
+    - 'Remove `relationship` key from eager_load'
+    - builder_table_update_ipricegroup_ocapiplugin_resources_remove_relationship.php

@@ -142,7 +142,7 @@ class ApiControllersManager
         $quotedEagerLoads = [];
 
         foreach ($resource->eager_load as $eagerLoad) {
-            $quotedEagerLoads[] = "'{$eagerLoad['relationship']}'";
+            $quotedEagerLoads[] = "'$eagerLoad'";
         }
 
         return implode(', ', $quotedEagerLoads);

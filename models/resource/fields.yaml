@@ -14,13 +14,9 @@ fields:
         label: 'Eager Load Relationships'
         prompt: 'Add Relationship'
         span: auto
-        type: repeater
-        form:
-            fields:
-                relationship:
-                    label: Relationship
-                    span: full
-                    type: text
+        type: taglist
+        mode: array
+        separator: space
     is_auth_required:
         label: 'Require Authentication'
         span: auto
