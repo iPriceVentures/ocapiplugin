@@ -16,7 +16,7 @@ class RoutesManager
         '%base_endpoint%',
         '%controller_class%',
         '%options%',
-        '%middleware_string%',
+        '%route_methods%',
     ];
 
     /**
@@ -53,7 +53,7 @@ class RoutesManager
             $resource->base_endpoint,
             ApiControllersManager::getFullyQualifiedControllerClass($resource),
             $this->getOptions($resource),
-            $this->getMiddleWareString($resource),
+            $this->getRouteMethods($resource),
         ];
 
         return str_replace(self::ROUTE_TEMPLATE_PLACEHOLDERS, $replacements, $this->routeTemplate);
@@ -68,7 +68,7 @@ class RoutesManager
         return '';
     }
 
-    private function getMiddleWareString(Resource $resource): string
+    private function getRouteMethods(Resource $resource): string
     {
         if (!$this->isApiResourceRouteMethod($resource) && $resource->is_auth_required) {
             return sprintf("->middleware('%s')", Authenticate::class);
