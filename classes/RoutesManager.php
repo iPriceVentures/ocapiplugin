@@ -48,10 +48,11 @@ class RoutesManager
 
     private function compileRoute(Resource $resource): string
     {
+        $actionMethod = $resource->controller_method ? '@' . $resource->controller_method : '';
         $replacements = [
             $resource->router_method,
             $resource->base_endpoint,
-            ApiControllersManager::getFullyQualifiedControllerClass($resource),
+            ApiControllersManager::getFullyQualifiedControllerClass($resource) . $actionMethod,
             $this->getOptions($resource),
             $this->getRouteMethods($resource),
         ];
