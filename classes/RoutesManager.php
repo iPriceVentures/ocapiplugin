@@ -56,13 +56,7 @@ class RoutesManager
             $this->getMiddleWareString($resource),
         ];
 
-        return str_replace(self::ROUTE_TEMPLATE_PLACEHOLDERS, $replacements, $this->getRouteTemplate($resource));
-    }
-
-    private function getRouteTemplate(Resource $resource): string
-    {
-        $variable = sprintf('route%sTemplate', ucwords($resource->router_method));
-        return $this->$variable ?: $this->routeTemplate;
+        return str_replace(self::ROUTE_TEMPLATE_PLACEHOLDERS, $replacements, $this->routeTemplate);
     }
 
     private function getOptions(Resource $resource): string
