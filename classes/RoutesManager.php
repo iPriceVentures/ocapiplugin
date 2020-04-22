@@ -80,6 +80,6 @@ class RoutesManager
 
     private function isApiResourceRouteMethod(Resource $resource): bool
     {
-        return $resource->router_method == 'apiResource';
+        return $resource->router_method === 'apiResource';
     }
 }
