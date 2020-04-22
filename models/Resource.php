@@ -30,6 +30,15 @@ class Resource extends Model
         'eager_load'
     ];
 
+    protected $fillable = [
+        'router_method',
+        'base_endpoint',
+        'controller_method',
+        'model_class',
+        'eager_load',
+        'is_auth_required',
+    ];
+
     public function getModelClassOptions()
     {
         $globalModels = ComponentHelper::instance()->listGlobalModels();
