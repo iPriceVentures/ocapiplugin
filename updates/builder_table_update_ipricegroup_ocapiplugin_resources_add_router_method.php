@@ -5,7 +5,7 @@ namespace IPriceGroup\OcApiPlugin\Updates;
 use Schema;
 use October\Rain\Database\Updates\Migration;
 
-class BuilderTableUpdateIpricegroupOcapipluginResourcesAddRouteAction extends Migration
+class BuilderTableUpdateIpricegroupOcapipluginResourcesAddRouterMethod extends Migration
 {
     const TABLE_NAME = 'ipricegroup_ocapiplugin_resources';
 

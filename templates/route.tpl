@@ -1,1 +1,1 @@
-Route::%router_method%('%base_endpoint%', '%controller_class%')%middleware_string%;
+Route::%router_method%('%base_endpoint%', '%controller_class%'%options%)%middleware_string%;

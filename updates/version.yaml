@@ -22,5 +22,5 @@
     - 'Remove `relationship` key from eager_load'
     - builder_table_update_ipricegroup_ocapiplugin_resources_remove_relationship.php
 1.2.1:
-    - 'Add route_action to table'
-    - builder_table_update_ipricegroup_ocapiplugin_resources_add_route_action.php
+    - 'Add router_method to table'
+    - builder_table_update_ipricegroup_ocapiplugin_resources_add_router_method.php

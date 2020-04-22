@@ -11,7 +11,6 @@ class RoutesManager
 {
     private const ROUTE_PATH = __DIR__ . '/../routes.php';
     private const ROUTE_TEMPLATE_PATH = __DIR__ . '/../templates/route.tpl';
-    private const ROUTE_API_RESOURCE_TEMPLATE_PATH = __DIR__ . '/../templates/route_api_resource.tpl';
     private const ROUTE_TEMPLATE_PLACEHOLDERS = [
         '%router_method%',
         '%base_endpoint%',
@@ -34,7 +33,6 @@ class RoutesManager
     {
         $this->filesystem = $filesystem;
         $this->routeTemplate = $this->filesystem->get(self::ROUTE_TEMPLATE_PATH);
-        $this->routeApiResourceTemplate = $this->filesystem->get(self::ROUTE_API_RESOURCE_TEMPLATE_PATH);
     }
 
     public function syncRoutes(Collection $resources): bool
@@ -69,8 +67,8 @@ class RoutesManager
 
     private function getOptions(Resource $resource): string
     {
-        if ($resource->is_auth_required) {
-            return "'middleware' => '" . Authenticate::class . "'";
+        if ($this->isApiResourceRouteMethod($resource) && $resource->is_auth_required) {
+            return ", ['middleware' => '" . Authenticate::class . "']";
         }
 
         return '';
@@ -78,10 +76,15 @@ class RoutesManager
 
     private function getMiddleWareString(Resource $resource): string
     {
-        if ($resource->is_auth_required) {
+        if (!$this->isApiResourceRouteMethod($resource) && $resource->is_auth_required) {
             return sprintf("->middleware('%s')", Authenticate::class);
         }
 
         return '';
+    }
+
+    private function isApiResourceRouteMethod(Resource $resource): bool
+    {
+        return $resource->router_method == 'apiResource';
     }
 }
