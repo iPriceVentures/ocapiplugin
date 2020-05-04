@@ -12,9 +12,11 @@ class RoutesManager
     private const ROUTE_PATH = __DIR__ . '/../routes.php';
     private const ROUTE_TEMPLATE_PATH = __DIR__ . '/../templates/route.tpl';
     private const ROUTE_TEMPLATE_PLACEHOLDERS = [
+        '%router_method%',
         '%base_endpoint%',
         '%controller_class%',
         '%options%',
+        '%route_methods%',
     ];
 
     /**
@@ -46,10 +48,13 @@ class RoutesManager
 
     private function compileRoute(Resource $resource): string
     {
+        $actionMethod = $resource->controller_method ? '@' . $resource->controller_method : '';
         $replacements = [
+            $resource->router_method,
             $resource->base_endpoint,
-            ApiControllersManager::getFullyQualifiedControllerClass($resource),
-            $this->getOptions($resource)
+            ApiControllersManager::getFullyQualifiedControllerClass($resource) . $actionMethod,
+            $this->getOptions($resource),
+            $this->getRouteMethods($resource),
         ];
 
         return str_replace(self::ROUTE_TEMPLATE_PLACEHOLDERS, $replacements, $this->routeTemplate);
@@ -57,10 +62,24 @@ class RoutesManager
 
     private function getOptions(Resource $resource): string
     {
-        if ($resource->is_auth_required) {
-            return "'middleware' => '" . Authenticate::class . "'";
+        if ($this->isApiResourceRouteMethod($resource) && $resource->is_auth_required) {
+            return ", ['middleware' => '" . Authenticate::class . "']";
         }
 
         return '';
+    }
+
+    private function getRouteMethods(Resource $resource): string
+    {
+        if (!$this->isApiResourceRouteMethod($resource) && $resource->is_auth_required) {
+            return sprintf("->middleware('%s')", Authenticate::class);
+        }
+
+        return '';
+    }
+
+    private function isApiResourceRouteMethod(Resource $resource): bool
+    {
+        return $resource->router_method === 'apiResource';
     }
 }
