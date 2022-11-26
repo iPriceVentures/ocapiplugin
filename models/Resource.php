@@ -50,8 +50,7 @@ class Resource extends Model
 
     protected static function boot()
     {
-        self::observe(ResourceObserver::class);
-
         parent::boot();
+        self::observe(ResourceObserver::class);
     }
 }
