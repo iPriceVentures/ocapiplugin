@@ -25,7 +25,7 @@ abstract class BaseApiController extends Controller
         'lte' => '<=',
         'eq' => '=',
         'neq' => '<>',
-        'contains' => 'like'
+        'contains' => 'ilike'
     ];
     private const DEFAULT_SORT_ORDER = 'asc';
 
